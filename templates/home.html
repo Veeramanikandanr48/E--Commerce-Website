@@ -1,0 +1,126 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Welcome</title>
+<!-- Add Bootstrap CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<!-- Add custom CSS -->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='css/topStyle.css') }}" />
+
+<style>
+  /* Custom CSS for attractive styling */
+  body {
+    background-color: #f8f8f8;
+  }
+
+  .displayCategory {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  }
+
+  .displayCategory ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .displayCategory ul li {
+    margin-bottom: 10px;
+  }
+
+  .displayCategory ul li a {
+    color: #333;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .displayCategory ul li a:hover {
+    color: #007bff;
+  }
+</style>
+</head>
+<body>
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<div class="container">
+		  <a class="navbar-brand" href="/">
+			<img id="logo" src="{{ url_for('static', filename='images/logo.png') }}" />
+		  </a>
+		  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		  </button>
+	  
+		  <div class="collapse navbar-collapse" id="navbarContent">
+			<ul class="navbar-nav ml-auto">
+			  {% if not loggedIn %}
+			  <li class="nav-item">
+				<a class="nav-link" href="/loginForm">Sign In</a>
+			  </li>
+			  {% else %}
+			  <li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				  Hello, <br>{{firstName}}
+				</a>
+				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+				  <a class="dropdown-item" href="/account/orders">Your orders</a>
+				  <a class="dropdown-item" href="/account/profile">Your profile</a>
+				  <div class="dropdown-divider"></div>
+				  <a class="dropdown-item" href="/logout">Sign Out</a>
+				</div>
+			  </li>
+			  {% endif %}
+			  <li class="nav-item">
+				<a class="nav-link" href="/cart">
+				  <img src="{{ url_for('static', filename='images/shoppingCart.png') }}" id="cartIcon" />
+				  CART {{noOfItems}}
+				</a>
+			  </li>
+			</ul>
+		  </div>
+		</div>
+	  </nav>
+
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-3">
+      <div class="displayCategory">
+        <h2>Shop by Category:</h2>
+        <ul>
+          {% for row in categoryData %}
+          <li><a href="/displayCategory?categoryId={{row[0]}}">{{row[1]}}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+    <div class="col-md-9">
+      <h2>Items</h2>
+      {% for data in itemData %}
+      <div class="row">
+        {% for row in data %}
+        <div class="col-md-4 mb-4">
+          <div class="card">
+            <a href="/productDescription?productId={{row[0]}}">
+              <img src="{{ url_for('static', filename='uploads/' + row[4]) }}" class="card-img-top" alt="Item Image" />
+            </a>
+            <div class="card-body">
+              <h5 class="card-title">{{row[1]}}</h5>
+              <p class="card-text">${{row[2]}}</p>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<!-- Add Bootstrap JS (requires jQuery) -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

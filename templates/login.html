@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Login</title>
+<!-- Add Bootstrap CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<style>
+	body {
+		background: linear-gradient(135deg, #e6e6ff, #cce0ff);
+	}
+	.login-container {
+		margin-top: 100px;
+	}
+	.login-form {
+		background-color: #fff;
+		padding: 30px;
+		border-radius: 5px;
+		box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+	}
+</style>
+</head>
+<body>
+<div class="container">
+	<div class="row justify-content-center login-container">
+		<div class="col-md-6 col-sm-8 col-10">
+			<form class="login-form" action="/login" method="POST">
+				<h3 class="text-center mb-4">Login</h3>
+				<div class="form-group">
+					<label for="email">Email:</label>
+					<input type="text" class="form-control" id="email" name="email" required>
+				</div>
+				<div class="form-group">
+					<label for="password">Password:</label>
+					<input type="password" class="form-control" id="password" name="password" required>
+				</div>
+				<div class="form-group text-center">
+					<button type="submit" class="btn btn-primary">Login</button>
+				</div>
+				<p class="text-center">Don't have an account? <a href="/registerationForm">Register here</a></p>
+			</form>
+		</div>
+	</div>
+</div>
+
+<!-- Add Bootstrap JS (requires jQuery) -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

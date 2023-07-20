@@ -1,0 +1,171 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Product Description</title>
+
+<!-- Add Bootstrap CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<!-- Add Bootstrap JS (requires jQuery) -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<link rel="stylesheet" href="{{url_for('static', filename='css/productDescription.css')}}"/>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/topStyle.css')}}"/>
+<style>
+  /* Custom CSS for attractive styling */
+  body {
+    background-color: #f8f8f8;
+  }
+
+  /* Add additional custom styles as needed */
+  .navbar {
+    background-color: #333;
+  }
+
+  .navbar-brand img {
+    width: 50px;
+    height: 50px;
+  }
+
+  .navbar-form {
+    display: none;
+  }
+
+  .navbar-nav.ml-auto li {
+    padding: 0 10px;
+  }
+
+  .navbar-nav.ml-auto a {
+    color: #0c0b0b;
+    font-weight: bold;
+  }
+
+  .navbar-nav.ml-auto a:hover {
+    color: #ff9800;
+  }
+
+  #display {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  }
+
+  #productName {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  #productImage {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+  }
+
+  #descriptionTable {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  #descriptionTable td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+
+  #addToCart {
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  #addToCart a {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #ff9800;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+  }
+
+  #addToCart a:hover {
+    background-color: #f57c00;
+  }
+</style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <img id="logo" src="{{ url_for('static', filename='images/logo.png') }}" />
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarContent">
+      <ul class="navbar-nav ml-auto">
+        {% if not loggedIn %}
+        <li class="nav-item">
+          <a class="nav-link" href="/loginForm">Sign In</a>
+        </li>
+        {% else %}
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Hello, <br>{{firstName}}
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="/account/orders">Your orders</a>
+            <a class="dropdown-item" href="/account/profile">Your profile</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="/logout">Sign Out</a>
+          </div>
+        </li>
+        {% endif %}
+        <li class="nav-item">
+          <a class="nav-link" href="/cart">
+            <img src="{{ url_for('static', filename='images/shoppingCart.png') }}" id="cartIcon" />
+            CART {{noOfItems}}
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container mt-5" id="display">
+  <div id="productName">
+    <h1>{{data[1]}}</h1>
+  </div>
+  <div>
+    <img src={{url_for('static', filename='uploads/'+data[4]) }} id="productImage" />
+  </div>
+
+  <div id="productDescription">
+    <h2>Details</h2>
+    <table id="descriptionTable">
+      <tr>
+        <td>Name</td>
+        <td>{{data[1]}}</td>
+      </tr>
+      <tr>
+        <td>Price</td>
+        <td>${{data[2]}}</td>
+      </tr>
+      <tr>
+        <td>Stock</td>
+        <td>{{data[5]}}</td>
+      </tr>
+    </table>
+    <h2>Description</h2>
+    <p>{{data[3]}}</p>
+  </div>
+  <div id="addToCart">
+    <a href="/addToCart?productId={{request.args.get('productId')}}">Add to Cart</a>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Edit Profile</title>
+<!-- Add Bootstrap CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<!-- Your custom CSS -->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/editProfile.css') }}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='css/topStyle.css') }}" />
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+	<div class="container">
+		<a class="navbar-brand" href="/">
+			<img id="logo" src="{{ url_for('static', filename='images/logo.png') }}" />
+		</a>
+		<div class="collapse navbar-collapse">
+			<ul class="navbar-nav ml-auto">
+				{% if not loggedIn %}
+				<li class="nav-item">
+					<a class="nav-link" href="/loginForm">Sign In</a>
+				</li>
+				{% else %}
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						Hello, <br>{{firstName}}
+					</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<a class="dropdown-item" href="/account/orders">Your orders</a>
+						<a class="dropdown-item" href="/account/profile">Your profile</a>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item" href="/logout">Sign Out</a>
+					</div>
+				</li>
+				{% endif %}
+				<li class="nav-item">
+					<a class="nav-link" href="/cart">
+						<img src="{{ url_for('static', filename='images/shoppingCart.png') }}" id="cartIcon" />
+						CART {{noOfItems}}
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</nav>
+
+<div class="container mt-4">
+	<div class="row justify-content-center">
+		<div class="col-md-6">
+			<div class="card">
+				<div class="card-body">
+					<h2 class="card-title text-center mb-4">Edit Profile</h2>
+					<form action="/updateProfile" method="POST">
+						<div class="form-group">
+							<label>Email:</label>
+							<input type="email" name="email" class="form-control" value={{profileData[1]}} readonly="readonly">
+						</div>
+						<div class="form-group">
+							<label>First Name:</label>
+							<input type="text" name="firstName" class="form-control" value={{profileData[2]}}>
+						</div>
+						<div class="form-group">
+							<label>Last Name:</label>
+							<input type="text" name="lastName" class="form-control" value={{profileData[3]}}>
+						</div>
+						<div class="form-group">
+							<label>Address 1:</label>
+							<input type="text" name="address1" class="form-control" value={{profileData[4]}}>
+						</div>
+						<div class="form-group">
+							<label>Address 2:</label>
+							<input type="text" name="address2" class="form-control" value={{profileData[5]}}>
+						</div>
+						<div class="form-group">
+							<label>Zip Code:</label>
+							<input type="text" name="zipcode" class="form-control" value={{profileData[6]}}>
+						</div>
+						<div class="form-group">
+							<label>City:</label>
+							<input type="text" name="city" class="form-control" value={{profileData[7]}}>
+						</div>
+						<div class="form-group">
+							<label>State:</label>
+							<input type="text" name="state" class="form-control" value={{profileData[8]}}>
+						</div>
+						<div class="form-group">
+							<label>Country:</label>
+							<input type="text" name="country" class="form-control" value={{profileData[9]}}>
+						</div>
+						<div class="form-group">
+							<label>Phone Number:</label>
+							<input type="text" name="phone" class="form-control" value={{profileData[10]}}>
+						</div>
+						<input type="submit" value="Save" class="btn btn-primary">
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Add Bootstrap JS (requires jQuery) -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
